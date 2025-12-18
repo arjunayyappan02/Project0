@@ -1,0 +1,11 @@
+# Java build output
+target/
+out/
+
+# IDE files
+.idea/
+.vscode/
+*.iml
+
+# Database credentials
+database.properties
