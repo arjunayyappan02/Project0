@@ -1,5 +1,6 @@
 package org.example.service.model;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.Objects;
 
@@ -7,7 +8,7 @@ public class Task {
     private int id;      //Task identifier
     private String name; //Name of task
     private int status;      //Task description
-    private Date dueDate;    //Due date
+    private LocalDate dueDate;    //Due date
     private int priority;    //Set task priority (0 - Low, 1 - Medium, 2 - High)
 
     @Override
@@ -26,11 +27,11 @@ public class Task {
     @Override
     public String toString() {
         return "Task{" +
-                "taskID=" + id +
-                ", name='" + name + '\'' +
-                ", status='" + status + '\'' +
-                ", dueDate=" + dueDate +
-                ", priority=" + priority +
+                "taskID =" + id +
+                ", name ='" + name + '\'' +
+                ", status ='" + status + '\'' +
+                ", dueDate =" + dueDate +
+                ", priority =" + priority +
                 '}';
     }
 
@@ -46,15 +47,15 @@ public class Task {
 
     public void setStatus(int status) { this.status = status; }
 
-    public Date getDueDate() { return dueDate; }
+    public LocalDate getDueDate() { return dueDate; }
 
-    public void setDueDate(Date dueDate) { this.dueDate = dueDate; }
+    public void setDueDate(LocalDate dueDate) { this.dueDate = dueDate; }
 
     public int getPriority() { return priority; }
 
     public void setPriority(int priority) { this.priority = priority; }
 
-    public Task(int id, String name, int status, Date dueDate, int priority) {
+    public Task(int id, String name, int status, LocalDate dueDate, int priority) {
         this.id = id;
         this.name = name;
         this.status = status;

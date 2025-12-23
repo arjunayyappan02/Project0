@@ -40,9 +40,9 @@ public class UserTasksEntity {
     @Override
     public String toString() {
         return "UserTasksEntity{" +
-                "ID=" + id +
-                ", userID=" + userID +
-                ", taskID=" + taskID +
+                "ID =" + id +
+                ", userID =" + userID +
+                ", taskID =" + taskID +
                 '}';
     }
 
@@ -56,5 +56,8 @@ public class UserTasksEntity {
     @Override
     public int hashCode() {
         return Objects.hash(id, userID, taskID);
+    }
+
+    public UserTasksEntity() {
     }
 }

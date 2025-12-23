@@ -14,28 +14,31 @@ public class TaskService implements ServiceInterface<TaskEntity, Task> {
 
     private TaskDAO taskDAO = new TaskDAO();
 
+    public TaskService() {
+    }
+
     @Override
     public Integer createEntity(TaskEntity entity) {
         try{
             Integer newID = taskDAO.create(entity);
             return newID;
         } catch(SQLException e){
-            e.printStackTrace();
+            //e.printStackTrace();
             return -1;
         }
     }
 
     @Override
-    public Optional<TaskEntity> getEntityByID(Integer ID) {
+    public Optional<TaskEntity> getEntityByID(Integer id) {
         try{
-            Optional<TaskEntity> TaskEntity = taskDAO.findByID(ID);
+            Optional<TaskEntity> TaskEntity = taskDAO.findByID(id);
             if(TaskEntity.isEmpty()){
                 throw new RuntimeException("Task not found");
             }
 
             return TaskEntity;
         } catch(SQLException | RuntimeException e){
-            e.printStackTrace();
+            //e.printStackTrace();
             return Optional.empty();
         }
     }
@@ -46,7 +49,7 @@ public class TaskService implements ServiceInterface<TaskEntity, Task> {
             List<TaskEntity> taskEntities = taskDAO.findAll();
             return taskEntities;
         } catch (SQLException e){
-            e.printStackTrace();
+            //e.printStackTrace();
             return null;
         }
     }
@@ -57,8 +60,8 @@ public class TaskService implements ServiceInterface<TaskEntity, Task> {
     }
 
     @Override
-    public boolean deleteEntity(Integer ID) {
-        return false;
+    public void deleteEntity(Integer ID) {
+        //return false;
     }
 
     @Override
@@ -90,7 +93,7 @@ public class TaskService implements ServiceInterface<TaskEntity, Task> {
             }
 
         } catch(RuntimeException e){
-            e.printStackTrace();
+            //e.printStackTrace();
             return Optional.empty();
         }
     }
@@ -109,7 +112,7 @@ public class TaskService implements ServiceInterface<TaskEntity, Task> {
                 throw new RuntimeException("TaskEntity not found");
             }
         } catch(RuntimeException e){
-            e.printStackTrace();
+            //e.printStackTrace();
             return Optional.empty();
         }
     }
@@ -119,7 +122,7 @@ public class TaskService implements ServiceInterface<TaskEntity, Task> {
             Optional<TaskEntity> taskEntity = taskDAO.findByTaskName(taskName);
             return taskEntity;
         }catch (SQLException e){
-            e.printStackTrace();
+            //e.printStackTrace();
             return Optional.empty();
         }
     }

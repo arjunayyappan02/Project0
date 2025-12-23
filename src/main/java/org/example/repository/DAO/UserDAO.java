@@ -12,15 +12,12 @@ public class UserDAO implements DAOInterface<UserEntity> {
     private Connection connection = ConnectionHandler.getConnection();
     @Override
     public Integer create(UserEntity entity) throws SQLException {
-        String sql = "INSERT INTO user (id, firstName, lastName, role, tasks) VALUES (?, ?, ?, ?, ?) RETURNING ID";
+        String sql = "INSERT INTO users (firstName, lastName, role) VALUES (?, ?, ?) RETURNING ID";
 
         try(PreparedStatement stmt = connection.prepareStatement(sql)){
-
-            stmt.setInt(1, entity.getID());
-            stmt.setString(2, entity.getFirstName());
-            stmt.setString(3, entity.getLastName());
-            stmt.setInt(4, entity.getRole());
-            //stmt.setInt(5, entity.getTasks());
+            stmt.setString(1, entity.getFirstName());
+            stmt.setString(2, entity.getLastName());
+            stmt.setInt(3, entity.getRole());
 
             try(ResultSet rs = stmt.executeQuery()){
                 if(rs.next()){
@@ -32,18 +29,18 @@ public class UserDAO implements DAOInterface<UserEntity> {
     }
 
     @Override
-    public Optional<UserEntity> findByID(Integer ID) throws SQLException {
+    public Optional<UserEntity> findByID(Integer id) throws SQLException {
         String sql = "SELECT * FROM users WHERE id = ?";
 
         try(PreparedStatement stmt = connection.prepareStatement(sql)){
-            stmt.setInt(1, ID);
+            stmt.setInt(1, id);
 
             try(ResultSet rs = stmt.executeQuery()){
                 if(rs.next()){
                     UserEntity user = new UserEntity();
                     user.setID(rs.getInt("id"));
-                    user.setFirstName(rs.getString("firstname"));
-                    user.setLastName(rs.getString("lastname"));
+                    user.setFirstName(rs.getString("firstName"));
+                    user.setLastName(rs.getString("lastName"));
                     user.setRole(rs.getInt("role"));
 
                     return Optional.of(user);
@@ -55,24 +52,22 @@ public class UserDAO implements DAOInterface<UserEntity> {
 
     @Override
     public List<UserEntity> findAll() throws SQLException {
-        List<UserEntity> Users = new ArrayList<>();
+        List<UserEntity> users = new ArrayList<>();
 
-        String sql = "SELECT * FROM User";
+        String sql = "SELECT * FROM users";
         try(Statement stmt = connection.createStatement()){
             ResultSet rs = stmt.executeQuery(sql);
 
             while(rs.next()){
-
-                UserEntity User = new UserEntity();
-                User.setID(rs.getInt("id"));
-                User.setFirstName(rs.getString("first_name"));
-                User.setLastName(rs.getString("last_name"));
-                User.setRole(rs.getInt("dept_id"));
-
-                Users.add(User);
+                UserEntity user = new UserEntity();
+                user.setID(rs.getInt("id"));
+                user.setFirstName(rs.getString("firstName"));
+                user.setLastName(rs.getString("lastName"));
+                user.setRole(rs.getInt("role"));
+                users.add(user);
             }
         }
-        return Users;
+        return users;
     }
 
     @Override
@@ -81,53 +76,73 @@ public class UserDAO implements DAOInterface<UserEntity> {
     }
 
     @Override
-    public boolean deleteByID(Integer ID) throws SQLException {
-        return false;
+    public void deleteByID (Integer id) throws SQLException {
+        String sql = "DELETE FROM users WHERE id = ?";
+
+        try(PreparedStatement stmt = connection.prepareStatement(sql)){
+            stmt.setInt(1, id);
+            stmt.executeUpdate();
+
+        }
     }
 
     public List<UserEntity> findAllByUserID(Integer taskID) throws SQLException {
-        List<UserEntity> Users = new ArrayList<>();
+        List<UserEntity> users = new ArrayList<>();
 
-        String sql = "SELECT * FROM User WHERE dept_id = ?";
+        String sql = "SELECT * FROM users WHERE id = ?";
         try(PreparedStatement stmt = connection.prepareStatement(sql)){
             stmt.setInt(1, taskID);
 
             ResultSet rs = stmt.executeQuery();
 
             while(rs.next()){
-
-                UserEntity User = new UserEntity();
-                User.setID(rs.getInt("id"));
-                User.setFirstName(rs.getString("first_name"));
-                User.setLastName(rs.getString("last_name"));
-                User.setRole(rs.getInt("role"));
-                Users.add(User);
-            }
-        }
-        return Users;
-    }
-
-    public List<UserEntity> findAllByTaskID(Integer taskID) throws SQLException {
-        List<UserEntity> users = new ArrayList<>();
-
-        String sql = "SELECT * FROM users WHERE user_id = ?";
-        try(PreparedStatement stmt = connection.prepareStatement(sql)){
-            stmt.setInt(1, userID);
-
-            ResultSet rs = stmt.executeQuery();
-
-            while(rs.next()){
-
                 UserEntity user = new UserEntity();
                 user.setID(rs.getInt("id"));
                 user.setFirstName(rs.getString("first_name"));
                 user.setLastName(rs.getString("last_name"));
-                user.setLastName(rs.getInt("dept_id")); //UPDATE this to match user fields
-                user.setRole(rs.getInt("roel"));
+                user.setRole(rs.getInt("role"));
+                users.add(user);
+            }
+        }
+        return users;
+    }
+
+    public List<UserEntity> findAllByTaskID(int taskID) throws SQLException {
+        List<UserEntity> users = new ArrayList<>();
+
+        //String sql = "SELECT * FROM users WHERE task_id = ?";
+        String sql = "SELECT u.* FROM users u JOIN userTasks ut ON u.id = ut.userID WHERE ut.taskID = ?";
+        try(PreparedStatement stmt = connection.prepareStatement(sql)){
+            stmt.setInt(1, taskID);
+
+            ResultSet rs = stmt.executeQuery();
+
+            while(rs.next()){
+                UserEntity user = new UserEntity();
+                user.setID(rs.getInt("id"));
+                user.setFirstName(rs.getString("firstName"));
+                user.setLastName(rs.getString("lastName"));
+                user.setRole(rs.getInt("role"));
 
                 users.add(user);
             }
         }
         return users;
+    }
+
+    //@Override
+    public String returnFullName (Integer id) throws SQLException {
+        String sql = "SELECT first_name, last_name FROM users WHERE id = ?";
+
+        try(PreparedStatement stmt = connection.prepareStatement(sql)){
+            stmt.setInt(1, id);
+
+            try(ResultSet rs = stmt.executeQuery()){
+                if(rs.next()){
+                    return rs.getString("first_name") + rs.getString("last_name");
+                }
+            }
+        }
+        return "No name found";
     }
 }

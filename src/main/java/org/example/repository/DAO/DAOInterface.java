@@ -5,6 +5,7 @@ import org.example.repository.entities.TaskEntity;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
+import java.util.Date;
 
 public interface DAOInterface<T> {
     // CRUD Operations
@@ -17,5 +18,5 @@ public interface DAOInterface<T> {
     // UPDATE
     public T updateByID(T entity) throws SQLException;
     // DELETE
-    public boolean deleteByID(Integer ID) throws SQLException;
+    public void deleteByID(Integer ID) throws SQLException;
 }

@@ -1,17 +1,17 @@
 package org.example.service.model;
 
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class User {
-    public int ID;
+    public int id;
     public String firstName;
     public String lastName;
     public int role;
-    public ArrayList<Task> tasks;
+    public List<Task> tasks;
 
-    public User(int ID, String firstName, String lastName, int role, ArrayList<Task> tasks) {
-        this.ID = ID;
+    public User(int id, String firstName, String lastName, int role, List<Task> tasks) {
+        this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.role = role;
@@ -19,11 +19,11 @@ public class User {
     }
 
     public int getID() {
-        return ID;
+        return id;
     }
 
-    public void setID(int ID) {
-        this.ID = ID;
+    public void setID(int id) {
+        this.id = id;
     }
 
     public String getFirstName() {
@@ -50,34 +50,42 @@ public class User {
         this.role = role;
     }
 
-    public ArrayList<Task> getTasks() {
+    public List<Task> getTasks() {
         return tasks;
     }
 
-    public void setTasks(ArrayList<Task> tasks) {
+    public void updateTasks(List<Task> tasks) {
         this.tasks = tasks;
+    }
+
+    public void setTask(Task task) {
+        this.tasks.add(task);
+    }
+
+    public void removeTask(Task task) {
+        this.tasks.remove(task);
     }
 
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return ID == user.ID && role == user.role && Objects.equals(firstName, user.firstName) && Objects.equals(lastName, user.lastName) && Objects.equals(tasks, user.tasks);
+        return id == user.id && role == user.role && Objects.equals(firstName, user.firstName) && Objects.equals(lastName, user.lastName) && Objects.equals(tasks, user.tasks);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(ID, firstName, lastName, role, tasks);
+        return Objects.hash(id, firstName, lastName, role, tasks);
     }
 
     @Override
     public String toString() {
         return "User{" +
-                "ID=" + ID +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", role=" + role +
-                ", tasks=" + tasks +
+                "ID =" + id +
+                ", firstName ='" + firstName + '\'' +
+                ", lastName ='" + lastName + '\'' +
+                ", role =" + role +
+                ", tasks =" + tasks +
                 '}';
     }
 

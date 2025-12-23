@@ -1,18 +1,18 @@
 package org.example.repository.entities;
 
-import java.util.Date;
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.Objects;
-import java.util.Scanner;
 
 public class TaskEntity {
     public int id; //Task identifier
     public String name; //Name of task
     public int status; //Task status
-    public Date dueDate; //Due date
+    public LocalDate dueDate; //Due date
     public int priority; //Set task priority (0 - Low, 1 - Medium, 2 - High)
-    Scanner scanner = new Scanner(System.in);
+    //Scanner scanner = new Scanner(System.in);
 
-    public TaskEntity(int id, String name, int status, Date dueDate, int priority) {
+    public TaskEntity(int id, String name, int status, LocalDate dueDate, int priority) {
         this.id = id;
         this.name = name;
         this.status = status;
@@ -22,7 +22,7 @@ public class TaskEntity {
 
     public int getID() { return id; }
 
-    public void setID(int ID) { this.id = ID; }
+    public void setID(int id) { this.id = id; }
 
     public String getName() { return name; }
 
@@ -32,9 +32,9 @@ public class TaskEntity {
 
     public void setStatus(int status) { this.status = status; }
 
-    public Date getDueDate() { return dueDate; }
+    public LocalDate getDueDate() { return dueDate; }
 
-    public void setDueDate(Date dueDate) { this.dueDate = dueDate; }
+    public void setDueDate(LocalDate dueDate) { this.dueDate = dueDate; }
 
     public int getPriority() { return priority; }
 
@@ -42,12 +42,12 @@ public class TaskEntity {
 
     @Override
     public String toString() {
-        return "TaskEntity{" +
-                "ID=" + id +
-                ", name='" + name + '\'' +
-                ", status='" + status + '\'' +
-                ", dueDate=" + dueDate +
-                ", priority=" + priority +
+        return "TaskEntity {" +
+                "ID = " + id +
+                ", name = '" + name + '\'' +
+                ", status = '" + status + '\'' +
+                ", dueDate = " + dueDate +
+                ", priority = " + priority +
                 '}';
     }
 

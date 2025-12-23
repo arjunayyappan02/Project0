@@ -3,6 +3,7 @@ package org.example.repository.entities;
 import org.example.service.model.Task;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class UserEntity {
@@ -10,13 +11,14 @@ public class UserEntity {
     public String firstName;
     public String lastName;
     public int role;
-    public ArrayList<Task> tasks;
+    public List<Task> tasks = new ArrayList<>();
 
-    public UserEntity(int ID, String firstName, String lastName, int role) {
+    public UserEntity(int ID, String firstName, String lastName, int role, List<Task> tasks) {
         this.id = ID;
         this.firstName = firstName;
         this.lastName = lastName;
         this.role = role;
+        this.tasks = tasks;
     }
 
     public int getID() {
@@ -51,21 +53,29 @@ public class UserEntity {
         this.role = role;
     }
 
-    public ArrayList<Task> getTasks() {
+    public List<Task> getTasks() {
         return tasks;
     }
 
-    public void setTasks(ArrayList<Task> tasks) {
+    public void updateTasks(List<Task> tasks) {
         this.tasks = tasks;
+    }
+
+    public void setTask(Task task) {
+        tasks.add(task);
+    }
+
+    public void removeTask(Task task) {
+        this.tasks.remove(task);
     }
 
     @Override
     public String toString() {
         return "UserEntity{" +
-                "ID=" + id +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", role=" + role +
+                "ID =" + id +
+                ", firstName ='" + firstName + '\'' +
+                ", lastName ='" + lastName + '\'' +
+                ", role =" + role +
                 '}';
     }
 

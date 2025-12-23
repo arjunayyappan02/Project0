@@ -11,7 +11,7 @@ public interface ServiceInterface<T, U> {
     Optional<T> getEntityByID (Integer ID);
     List<T> getAllEntities();
     T updateEntity(Integer ID, T newEntity);
-    boolean deleteEntity(Integer ID);
+    void deleteEntity(Integer ID);
 
     // Conversion
     Optional<U> convertEntityToModel(T entity);
